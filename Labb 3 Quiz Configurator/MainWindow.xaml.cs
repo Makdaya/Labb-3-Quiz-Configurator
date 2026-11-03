@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Labb_3_Quiz_Configurator.ViewModels;
 
 namespace Labb_3_Quiz_Configurator
 {
@@ -19,6 +20,7 @@ namespace Labb_3_Quiz_Configurator
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
 
         }
     }
