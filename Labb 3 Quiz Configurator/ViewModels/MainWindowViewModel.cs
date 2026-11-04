@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using Labb_3_Quiz_Configurator.Command;
 
 namespace Labb_3_Quiz_Configurator.ViewModels;
 
 internal class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<QuestionPackViewModel> Packs { get; }
+    public RelayCommand AddPackCommand { get; }
 
     private QuestionPackViewModel _activePack;
     public QuestionPackViewModel ActivePack
@@ -32,6 +34,7 @@ internal class MainWindowViewModel : ViewModelBase
     {
         PlayerViewModel = new PlayerViewModel(this);
         ConfigurationViewModel = new ConfigurationViewModel(this);
+        AddPackCommand = new RelayCommand(_ => AddPack());
 
         var questionPack = new QuestionPack("Mina frågor!", Difficulty.Easy);
         questionPack.Questions.Add(new Question("Vad heter sveriges huvudstad?", "Stockholm", "Oslo", "Göteborg", "London"));
@@ -43,6 +46,16 @@ internal class MainWindowViewModel : ViewModelBase
 {
     packViewModel
 };
+        ActivePack = packViewModel;
+    }
+
+    private void AddPack()
+    {
+        var questionPack = new QuestionPack("New question pack", Difficulty.Easy);
+
+        var packViewModel = new QuestionPackViewModel(questionPack);
+
+        Packs.Add(packViewModel);
 
         ActivePack = packViewModel;
     }

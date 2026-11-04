@@ -28,8 +28,12 @@
                            VerticalAlignment="Center"/>
 
                 <Button Content="⚙️" Margin="5"/>
-                <Button Content="+" Margin="5"/>
-                <Button Content="-" Margin="5"/>
+                <Button Content="+" 
+                        Margin="5"
+                        Command="{Binding AddQuestionCommand}"/>
+                <Button Content="-" 
+                        Margin="5"
+                        Command="{Binding RemoveQuestionCommand}"/>
 
             </StackPanel>
 
@@ -58,35 +62,49 @@
             <TextBox Height="70"
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
-                    Text="{Binding SelectedQuestion.Query, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding SelectedQuestion.Query, 
+                    UpdateSourceTrigger=PropertyChanged}"
+            />
 
             <TextBlock Text="Correct Answer:"
                        FontWeight="Bold"
-                       Margin="0 10 0 5"/>
+                       Margin="0 10 0 5"
+             />
 
             <TextBox Height="25"
-                     Text="{Binding SelectedQuestion.CorrectAnswer, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding SelectedQuestion.CorrectAnswer,
+                     UpdateSourceTrigger=PropertyChanged}"
+             />
 
             <TextBlock Text="First Incorrect Answer:"
                        FontWeight="Bold"
-                       Margin="0 10 0 5"/>
+                       Margin="0 10 0 5"
+             />
 
             <TextBox Height="25"
-                    Text="{Binding SelectedQuestion.IncorrectAnswers[0], UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding SelectedQuestion.IncorrectAnswers[0], 
+                    UpdateSourceTrigger=PropertyChanged}"
+             />
 
             <TextBlock Text="Second Incorrect Answer:"
                        FontWeight="Bold"
-                       Margin="0 10 0 5"/>
+                       Margin="0 10 0 5"
+            />
 
             <TextBox Height="25"
-                     Text="{Binding SelectedQuestion.IncorrectAnswers[1], UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding SelectedQuestion.IncorrectAnswers[1], 
+                     UpdateSourceTrigger=PropertyChanged}"
+            />
 
             <TextBlock Text="Third Incorrect Answer:"
                        FontWeight="Bold"
-                       Margin="0 10 0 5"/>
+                       Margin="0 10 0 5"
+             />
 
             <TextBox Height="25"
-                     Text="{Binding SelectedQuestion.IncorrectAnswers[2], UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding SelectedQuestion.IncorrectAnswers[2], 
+                     UpdateSourceTrigger=PropertyChanged}"
+            />
 
 
         </StackPanel>

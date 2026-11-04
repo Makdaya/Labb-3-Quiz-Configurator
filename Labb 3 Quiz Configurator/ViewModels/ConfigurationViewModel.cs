@@ -18,6 +18,8 @@ internal class ConfigurationViewModel : ViewModelBase
     }
 
     public RelayCommand ChangePackNameCommand { get; }
+    public RelayCommand AddQuestionCommand { get; }
+    public RelayCommand RemoveQuestionCommand { get; }
 
     private string _demoText = string.Empty;
     public string DemoText {
@@ -40,6 +42,9 @@ internal class ConfigurationViewModel : ViewModelBase
         _mainWindowViewModel = mainWindowViewModel;
 
         ChangePackNameCommand = new RelayCommand(_ => ChangePackName(), _ => DemoText != string.Empty);
+
+        AddQuestionCommand = new RelayCommand(_ => AddQuestion());
+        RemoveQuestionCommand = new RelayCommand(_ => RemoveQuestion());
     }
 
     private bool CanChangePackName(object? arg)
@@ -52,6 +57,30 @@ internal class ConfigurationViewModel : ViewModelBase
         if (ActivePack != null)
         {
             ActivePack.Name = DemoText;
+        }
+    }
+    private void AddQuestion()
+    {
+        if (ActivePack != null)
+        {
+            var question = new Question(
+                "New question",
+                "Correct answer",
+                "Incorrect answer 1",
+                "Incorrect answer 2",
+                "Incorrect answer 3");
+
+            ActivePack.Questions.Add(question);
+            SelectedQuestion = question;
+            
+        }
+    }
+    private void RemoveQuestion()
+    {
+        if (ActivePack != null && SelectedQuestion != null)
+        {
+            ActivePack.Questions.Remove(SelectedQuestion);
+            SelectedQuestion = null;
         }
     }
 }
