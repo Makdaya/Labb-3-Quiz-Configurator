@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Labb_3_Quiz_Configurator.Command;
+﻿using Labb_3_Quiz_Configurator.Command;
 using Labb_3_Quiz_Configurator.Models;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text;
+using Labb_3_Quiz_Configurator.Views;
 
 namespace Labb_3_Quiz_Configurator.ViewModels;
 
@@ -10,9 +12,23 @@ internal class ConfigurationViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel? _mainWindowViewModel;
     private Question? _selectedQuestion;
+    private PackOptionsViewModel? _packOptionsViewModel;
+    private bool _showPackOptions;
+    public bool ShowPackOptions
+    {
+        get => _showPackOptions;
+        set => SetProperty(ref _showPackOptions, value);
+    }
+
+    public PackOptionsViewModel? PackOptionsViewModel
+    {
+        get => _packOptionsViewModel;
+        private set => SetProperty(ref _packOptionsViewModel, value);
+    }
 
     public Question? SelectedQuestion
     {
+
         get => _selectedQuestion;
         set => SetProperty(ref _selectedQuestion, value);
     }
@@ -20,6 +36,7 @@ internal class ConfigurationViewModel : ViewModelBase
     public RelayCommand ChangePackNameCommand { get; }
     public RelayCommand AddQuestionCommand { get; }
     public RelayCommand RemoveQuestionCommand { get; }
+    public RelayCommand OpenPackOptionsCommand { get; }
 
     private string _demoText = string.Empty;
     public string DemoText {
@@ -33,18 +50,47 @@ internal class ConfigurationViewModel : ViewModelBase
         }
     }
 
-    public QuestionPackViewModel? ActivePack { get => _mainWindowViewModel?.ActivePack; }
+    public ObservableCollection<QuestionPackViewModel>? Packs
+     => _mainWindowViewModel?.Packs;
 
-    public void RaiseActivePackChanged() => RaisePropertyChanged(nameof(ActivePack));
+    public QuestionPackViewModel? ActivePack
+    {
+        get => _mainWindowViewModel?.ActivePack;
+        set
+        {
+            if (_mainWindowViewModel != null && value != null)
+            {
+                _mainWindowViewModel.ActivePack = value;
+            }
+        }
+    }
+
+    public void RaiseActivePackChanged()
+    {
+        RaisePropertyChanged(nameof(ActivePack));
+
+        if (ActivePack != null)
+        {
+            PackOptionsViewModel = new PackOptionsViewModel(ActivePack);
+        }
+    }
 
     public ConfigurationViewModel(MainWindowViewModel? mainWindowViewModel)
     {
         _mainWindowViewModel = mainWindowViewModel;
 
+
+        if (ActivePack != null)
+        {
+            PackOptionsViewModel = new PackOptionsViewModel(ActivePack);
+        }
+
+
         ChangePackNameCommand = new RelayCommand(_ => ChangePackName(), _ => DemoText != string.Empty);
 
         AddQuestionCommand = new RelayCommand(_ => AddQuestion());
         RemoveQuestionCommand = new RelayCommand(_ => RemoveQuestion());
+        OpenPackOptionsCommand = new RelayCommand(_ => ShowPackOptions = true);
     }
 
     private bool CanChangePackName(object? arg)
@@ -72,7 +118,7 @@ internal class ConfigurationViewModel : ViewModelBase
 
             ActivePack.Questions.Add(question);
             SelectedQuestion = question;
-            
+
         }
     }
     private void RemoveQuestion()
@@ -83,4 +129,5 @@ internal class ConfigurationViewModel : ViewModelBase
             SelectedQuestion = null;
         }
     }
+
 }

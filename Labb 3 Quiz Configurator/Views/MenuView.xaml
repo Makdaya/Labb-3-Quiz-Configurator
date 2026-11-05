@@ -12,7 +12,8 @@
             <MenuItem Header="_New Question Pack"
                        Command="{Binding AddPackCommand}"/>
             <MenuItem Header="_Select Question Pack"/>
-            <MenuItem Header="_Delete Question Pack"/>
+            <MenuItem Header="_Delete Question Pack"
+                      Command="{Binding DeletePackCommand}"/>
             <Separator/>
             <MenuItem Header="E_xit"/>
         </MenuItem>

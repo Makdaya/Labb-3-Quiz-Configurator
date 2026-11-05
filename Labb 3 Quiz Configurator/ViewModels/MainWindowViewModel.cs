@@ -12,6 +12,8 @@ internal class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<QuestionPackViewModel> Packs { get; }
     public RelayCommand AddPackCommand { get; }
+    public RelayCommand DeletePackCommand { get; }
+
 
     private QuestionPackViewModel _activePack;
     public QuestionPackViewModel ActivePack
@@ -35,6 +37,7 @@ internal class MainWindowViewModel : ViewModelBase
         PlayerViewModel = new PlayerViewModel(this);
         ConfigurationViewModel = new ConfigurationViewModel(this);
         AddPackCommand = new RelayCommand(_ => AddPack());
+        DeletePackCommand = new RelayCommand(_ => DeletePack());
 
         var questionPack = new QuestionPack("Mina frågor!", Difficulty.Easy);
         questionPack.Questions.Add(new Question("Vad heter sveriges huvudstad?", "Stockholm", "Oslo", "Göteborg", "London"));
@@ -58,5 +61,14 @@ internal class MainWindowViewModel : ViewModelBase
         Packs.Add(packViewModel);
 
         ActivePack = packViewModel;
+    }
+
+    private void DeletePack()
+    {
+        if (Packs.Count > 1 && ActivePack != null)
+        {
+            Packs.Remove(ActivePack);
+            ActivePack = Packs[0];
+        }
     }
 }
