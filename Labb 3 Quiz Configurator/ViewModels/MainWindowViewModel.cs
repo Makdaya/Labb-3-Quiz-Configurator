@@ -13,6 +13,16 @@ internal class MainWindowViewModel : ViewModelBase
     public ObservableCollection<QuestionPackViewModel> Packs { get; }
     public RelayCommand AddPackCommand { get; }
     public RelayCommand DeletePackCommand { get; }
+    public RelayCommand PlayModeCommand { get; }
+    public RelayCommand EditModeCommand { get; }
+
+    private bool _isPlayMode;
+
+    public bool IsPlayMode
+    {
+        get => _isPlayMode;
+        set => SetProperty(ref _isPlayMode, value);
+    }
 
 
     private QuestionPackViewModel _activePack;
@@ -38,6 +48,8 @@ internal class MainWindowViewModel : ViewModelBase
         ConfigurationViewModel = new ConfigurationViewModel(this);
         AddPackCommand = new RelayCommand(_ => AddPack());
         DeletePackCommand = new RelayCommand(_ => DeletePack());
+        PlayModeCommand = new RelayCommand(_ => IsPlayMode = true);
+        EditModeCommand = new RelayCommand(_ => IsPlayMode = false);
 
         var questionPack = new QuestionPack("Mina frågor!", Difficulty.Easy);
         questionPack.Questions.Add(new Question("Vad heter sveriges huvudstad?", "Stockholm", "Oslo", "Göteborg", "London"));

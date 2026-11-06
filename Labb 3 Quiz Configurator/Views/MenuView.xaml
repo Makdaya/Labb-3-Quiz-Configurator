@@ -26,8 +26,10 @@
         </MenuItem>
 
         <MenuItem Header="_View">
-            <MenuItem Header="_Play"/>
-            <MenuItem Header="_Edit"/>
+            <MenuItem Header="_Play"
+                      Command="{Binding PlayModeCommand}"/>/>
+            <MenuItem Header="_Edit"
+                       Command="{Binding EditModeCommand}"/>
         </MenuItem>
     </Menu>
 

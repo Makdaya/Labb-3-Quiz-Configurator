@@ -13,7 +13,38 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <views:MenuView Grid.Row="0"/>
-        <views:ConfigurationView Grid.Row="1"/>
+        
+        
+        <views:ConfigurationView Grid.Row="1">
+            <views:ConfigurationView.Style>
+                <Style TargetType="views:ConfigurationView">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DataContext.IsPlayMode,
+                    RelativeSource={RelativeSource AncestorType=Window}}"
+                             Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </views:ConfigurationView.Style>
+        </views:ConfigurationView>
+
+        <views:PlayerView Grid.Row="1"
+                  DataContext="{Binding PlayerViewModel}">
+            <views:PlayerView.Style>
+                <Style TargetType="views:PlayerView">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DataContext.IsPlayMode,
+                    RelativeSource={RelativeSource AncestorType=Window}}"
+                             Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </views:PlayerView.Style>
+        </views:PlayerView>
 
     </Grid>
 </Window>
