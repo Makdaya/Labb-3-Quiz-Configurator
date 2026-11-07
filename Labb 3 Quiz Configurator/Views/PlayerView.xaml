@@ -8,10 +8,144 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <TextBlock Text="{Binding ResultMessage}"
-               FontSize="24"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"/>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+            <Button Content="Starta quiz"
+                    Command="{Binding StartQuizCommand}"
+                    Width="150"
+                    Height="40"
+                    Margin="10">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Visibility" Value="Visible"/>
+
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsQuizStarted}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsQuizFinished}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+            </Button>
+            
+
+            <StackPanel>
+
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsQuizStarted}" Value="True"/>
+                                    <Condition Binding="{Binding IsQuizFinished}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="Fråga {0} av {1}">
+                            <Binding Path="CurrentQuestionNumber"/>
+                            <Binding Path="TotalQuestions"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+
+
+                <TextBlock Text="{Binding CurrentQuestion.Query}"
+                       FontSize="22"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       Margin="10"
+               />
+
+                <TextBlock Text="{Binding TimeRemaining,
+                       StringFormat=Tid kvar: {0} sekunder}"
+                       FontSize="18"
+                       HorizontalAlignment="Center"
+                       Margin="10"
+                />
+
+                <ItemsControl ItemsSource="{Binding AnswerOptions}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding}"
+                                Command="{Binding DataContext.CheckAnswerCommand,
+                                RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}"
+                                Margin="5"
+                                Padding="10"
+                        />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock Text="{Binding FeedbackMessage}"
+                       FontSize="18"
+                       HorizontalAlignment="Center"
+                       Margin="10"
+                />
+
+                <Button Content="Nästa fråga"
+                        Command="{Binding NextQuestionCommand}"
+                        Margin="10 10 10 30"
+                        Padding="10"
+                        HorizontalAlignment="Right">
+
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding HasAnswered}" Value="True"/>
+                                        <Condition Binding="{Binding IsQuizFinished}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                </Button>
+
+            </StackPanel>
+
+            <TextBlock Text="{Binding ResultMessage}"
+           FontSize="24"
+           HorizontalAlignment="Center"
+           Margin="20">
+
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsQuizFinished}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+
+            </TextBlock>
+
+
+        </StackPanel>
     </Grid>
 
 

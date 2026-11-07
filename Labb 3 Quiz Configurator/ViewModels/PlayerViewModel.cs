@@ -64,6 +64,14 @@ internal class PlayerViewModel : ViewModelBase
         set => SetProperty(ref _currentQuestionNumber, value);
     }
 
+    private int _totalQuestions;
+
+    public int TotalQuestions
+    {
+        get => _totalQuestions;
+        set => SetProperty(ref _totalQuestions, value);
+    }
+
     private int _timeRemaining;
 
     public int TimeRemaining
@@ -99,6 +107,7 @@ internal class PlayerViewModel : ViewModelBase
         HasAnswered = false;
         FeedbackMessage = string.Empty;
 
+        IsQuizStarted = true;
         CurrentQuestionNumber = 1;
         CurrentQuestion = QuizQuestions[0];
         LoadAnswerOptions();
@@ -244,6 +253,14 @@ internal class PlayerViewModel : ViewModelBase
     {
         get => _isQuizFinished;
         set => SetProperty(ref _isQuizFinished, value);
+    }
+
+    private bool _isQuizStarted;
+
+    public bool IsQuizStarted
+    {
+        get => _isQuizStarted;
+        set => SetProperty(ref _isQuizStarted, value);
     }
 }
 
