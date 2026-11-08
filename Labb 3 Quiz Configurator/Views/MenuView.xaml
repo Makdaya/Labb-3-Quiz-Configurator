@@ -9,25 +9,42 @@
           d:DesignHeight="450" d:DesignWidth="800">
     <Menu>
         <MenuItem Header="_File">
-            <MenuItem Header="_New Question Pack"
-                       Command="{Binding AddPackCommand}"/>
-            <MenuItem Header="_Select Question Pack"/>
+        <MenuItem Header="_New Question Pack"
+                      Command="{Binding AddPackCommand}"/>
+        <MenuItem Header="_Select Question Pack"/>
+
             <MenuItem Header="_Delete Question Pack"
-                      Command="{Binding DeletePackCommand}"/>
+                      Command="{Binding DeletePackCommand}"
+             />
             <Separator/>
+            
+            <MenuItem Header="_Save"
+                      Command="{Binding SaveCommand}"
+             />
+            
+            <MenuItem Header="_Load"
+                       Command="{Binding LoadCommand}"
+             />
+            <Separator/>
+
             <MenuItem Header="E_xit"/>
         </MenuItem>
 
-        <MenuItem Header="_Edit">
-            <MenuItem Header="_Add Question"/>
-            <MenuItem Header="_Remove Question"/>
+            <MenuItem Header="_Edit">
+                
+            <MenuItem Header="_Add Question"
+                      Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
+                
+            <MenuItem Header="_Remove Question"
+                      Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
             <Separator/>
-            <MenuItem Header="_Pack Options"/>
+            <MenuItem Header="_Pack Options"
+                      Command="{Binding ConfigurationViewModel.OpenPackOptionsCommand}"/>
         </MenuItem>
 
         <MenuItem Header="_View">
             <MenuItem Header="_Play"
-                      Command="{Binding PlayModeCommand}"/>/>
+                      Command="{Binding PlayModeCommand}"/>
             <MenuItem Header="_Edit"
                        Command="{Binding EditModeCommand}"/>
         </MenuItem>

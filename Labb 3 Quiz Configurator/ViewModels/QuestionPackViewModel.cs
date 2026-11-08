@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Labb_3_Quiz_Configurator.ViewModels;
 
@@ -58,4 +59,12 @@ internal class QuestionPackViewModel : ViewModelBase
     }
 
     public ObservableCollection<Question> Questions { get; }
+
+    public QuestionPack ToModel()
+    {
+        return new QuestionPack(Name, Difficulty, TimeLimitInSeconds)
+        {
+            Questions = Questions.ToList()
+        };
+    }
 }

@@ -7,12 +7,19 @@ namespace Labb_3_Quiz_Configurator.Models;
 
 class Question : INotifyPropertyChanged
 {
+    public Question()
+    {
+        Query = "";
+        CorrectAnswer = "";
+        IncorrectAnswers = Array.Empty<string>();
+    }
     public Question(string query, string correctAnswer, string incorrectAnswer1, string incorrectAnswer2, string incorrectAnswer3)
     {
         Query = query;
         CorrectAnswer = correctAnswer;
         IncorrectAnswers = new string[] { incorrectAnswer1, incorrectAnswer2, incorrectAnswer3 };
     }
+
 
     private string _query;
 

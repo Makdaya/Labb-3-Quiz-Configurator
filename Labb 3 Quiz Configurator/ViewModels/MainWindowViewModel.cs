@@ -1,10 +1,16 @@
-﻿using Labb_3_Quiz_Configurator.Models;
+﻿using Labb_3_Quiz_Configurator.Command;
+using Labb_3_Quiz_Configurator.Models;
+using Labb_3_Quiz_Configurator.Services;
 using Labb_3_Quiz_Configurator.ViewModels;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using Labb_3_Quiz_Configurator.Command;
+using System.Windows;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace Labb_3_Quiz_Configurator.ViewModels;
 
@@ -15,6 +21,9 @@ internal class MainWindowViewModel : ViewModelBase
     public RelayCommand DeletePackCommand { get; }
     public RelayCommand PlayModeCommand { get; }
     public RelayCommand EditModeCommand { get; }
+    public RelayCommand SaveCommand { get; }
+    public RelayCommand LoadCommand { get; }
+    private readonly JsonService _jsonService = new JsonService();
 
     private bool _isPlayMode;
 
@@ -50,6 +59,8 @@ internal class MainWindowViewModel : ViewModelBase
         DeletePackCommand = new RelayCommand(_ => DeletePack());
         PlayModeCommand = new RelayCommand(_ => IsPlayMode = true);
         EditModeCommand = new RelayCommand(_ => IsPlayMode = false);
+        SaveCommand = new RelayCommand(async _ => await SavePacksAsync());
+        LoadCommand = new RelayCommand(async _ => await LoadPacksAsync());
 
         var questionPack = new QuestionPack("Mina frågor!", Difficulty.Easy);
         questionPack.Questions.Add(new Question("Vad heter sveriges huvudstad?", "Stockholm", "Oslo", "Göteborg", "London"));
@@ -81,6 +92,66 @@ internal class MainWindowViewModel : ViewModelBase
         {
             Packs.Remove(ActivePack);
             ActivePack = Packs[0];
+        }
+    }
+
+    private async Task SavePacksAsync()
+    {
+        SaveFileDialog dialog = new SaveFileDialog
+        {
+            Filter = "JSON files (*.json)|*.json",
+            DefaultExt = ".json",
+            AddExtension = true
+        };
+
+        if (dialog.ShowDialog() == true)
+        {
+            try
+            {
+                List<QuestionPack> packs = Packs
+                    .Select(pack => pack.ToModel())
+                    .ToList();
+
+                await _jsonService.SaveAsync(packs, dialog.FileName);
+
+                MessageBox.Show("Frågepaketen har sparats!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Det gick inte att spara: {ex.Message}");
+            }
+        }
+    }
+
+    private async Task LoadPacksAsync()
+    {
+        OpenFileDialog dialog = new OpenFileDialog
+        {
+            Filter = "JSON files (*.json)|*.json"
+        };
+
+        if (dialog.ShowDialog() == true)
+        {
+            try
+            {
+                List<QuestionPack> packs =
+                    await _jsonService.LoadAsync(dialog.FileName);
+
+                Packs.Clear();
+
+                foreach (QuestionPack pack in packs)
+                {
+                    Packs.Add(new QuestionPackViewModel(pack));
+                }
+
+                ActivePack = Packs.FirstOrDefault();
+
+                MessageBox.Show("Frågepaketen har lästs in!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Det gick inte att läsa in filen: {ex.Message}");
+            }
         }
     }
 }
