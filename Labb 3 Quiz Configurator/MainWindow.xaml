@@ -7,6 +7,20 @@
         xmlns:views="clr-namespace:Labb_3_Quiz_Configurator.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.InputBindings>
+        <KeyBinding Key="A"
+                    Modifiers="Control"
+                    Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
+        
+        <KeyBinding Key="R"
+                    Modifiers="Control"
+                    Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
+
+        <KeyBinding Key="O"
+                    Modifiers="Control"
+                    Command="{Binding ConfigurationViewModel.OpenPackOptionsCommand}"/>
+        
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -21,8 +35,8 @@
                     <Setter Property="Visibility" Value="Visible"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding DataContext.IsPlayMode,
-                    RelativeSource={RelativeSource AncestorType=Window}}"
-                             Value="True">
+                                     RelativeSource={RelativeSource AncestorType=Window}}"
+                                     Value="True">
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -31,14 +45,15 @@
         </views:ConfigurationView>
 
         <views:PlayerView Grid.Row="1"
-                  DataContext="{Binding PlayerViewModel}">
+                          DataContext="{Binding PlayerViewModel}">
             <views:PlayerView.Style>
                 <Style TargetType="views:PlayerView">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="Visibility" 
+                            Value="Collapsed"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding DataContext.IsPlayMode,
-                    RelativeSource={RelativeSource AncestorType=Window}}"
-                             Value="True">
+                                     RelativeSource={RelativeSource AncestorType=Window}}"
+                                     Value="True">
                             <Setter Property="Visibility" Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
