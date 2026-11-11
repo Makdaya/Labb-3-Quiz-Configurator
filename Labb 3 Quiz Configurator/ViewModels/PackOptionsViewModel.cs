@@ -32,7 +32,6 @@ namespace Labb_3_Quiz_Configurator.ViewModels
             }
         }
 
-
         public Difficulty Difficulty
         {
             get => _difficulty;
@@ -58,10 +57,8 @@ namespace Labb_3_Quiz_Configurator.ViewModels
         }
 
 
-
         public Array DifficultyOptions =>
             Enum.GetValues(typeof(Labb_3_Quiz_Configurator.Models.Difficulty));
-
 
     }
     

@@ -19,7 +19,7 @@
         <KeyBinding Key="O"
                     Modifiers="Control"
                     Command="{Binding ConfigurationViewModel.OpenPackOptionsCommand}"/>
-        
+   
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -27,7 +27,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <views:MenuView Grid.Row="0"/>
-        
         
         <views:ConfigurationView Grid.Row="1">
             <views:ConfigurationView.Style>
@@ -60,6 +59,5 @@
                 </Style>
             </views:PlayerView.Style>
         </views:PlayerView>
-
     </Grid>
 </Window>

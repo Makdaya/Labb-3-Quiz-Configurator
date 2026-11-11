@@ -94,8 +94,9 @@ internal class PlayerViewModel : ViewModelBase
         if (_mainWindowViewModel?.ActivePack == null)
             return;
 
-        QuizQuestions = new ObservableCollection<Question>(
+            QuizQuestions = new ObservableCollection<Question>(
             _mainWindowViewModel.ActivePack.Questions);
+            TotalQuestions = QuizQuestions.Count;
 
 
         if (QuizQuestions.Count == 0)

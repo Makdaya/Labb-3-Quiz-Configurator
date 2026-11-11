@@ -11,7 +11,6 @@ namespace Labb_3_Quiz_Configurator.Services
 {
     class JsonService
     {
-
         public async Task SaveAsync(List<QuestionPack> packs, string filePath)
         {
             await using FileStream stream = new FileStream(filePath, FileMode.Create);
