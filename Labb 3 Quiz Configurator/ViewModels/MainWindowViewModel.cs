@@ -23,7 +23,7 @@ internal class MainWindowViewModel : ViewModelBase
     public RelayCommand EditModeCommand { get; }
     public RelayCommand SaveCommand { get; }
     public RelayCommand LoadCommand { get; }
-    private readonly JsonService _jsonService = new JsonService();
+    private readonly Jsonservices _jsonService = new Jsonservices();
 
     private bool _isPlayMode;
 

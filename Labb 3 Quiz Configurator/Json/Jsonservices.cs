@@ -9,7 +9,7 @@ using Labb_3_Quiz_Configurator.Models;
 
 namespace Labb_3_Quiz_Configurator.Services
 {
-    class JsonService
+    class Jsonservices
     {
         public async Task SaveAsync(List<QuestionPack> packs, string filePath)
         {
